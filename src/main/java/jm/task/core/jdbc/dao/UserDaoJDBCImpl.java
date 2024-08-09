@@ -14,7 +14,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     }
 
-    public void createUsersTable() throws SQLException {
+    public void createUsersTable()  {
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS users" +
                     "(id mediumint not null auto_increment," + // 1
@@ -23,17 +23,21 @@ public class UserDaoJDBCImpl implements UserDao {
                     "age tinyint, " +//4
                     "PRIMARY KEY (id))");
             System.out.println("Таблица создана");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public void dropUsersTable() throws SQLException {
+    public void dropUsersTable()  {
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate("Drop table if exists test1.users");
             System.out.println("Таблица удалена");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public void saveUser(String name, String lastName, byte age) throws SQLException {
+    public void saveUser(String name, String lastName, byte age)  {
         String sql = "INSERT INTO users (name, lastname, age) VALUES(?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, name);
@@ -41,18 +45,22 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.setByte(3, age);
             preparedStatement.executeUpdate();
             System.out.println("User с именем – " + name + " добавлен в базу данных");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public void removeUserById(long id) throws SQLException {
+    public void removeUserById(long id) {
         try (Statement statement = connection.createStatement()) {
             String sql = "DELETE FROM users where id";
             statement.executeUpdate(sql);
             System.out.println("User удален");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public List<User> getAllUsers() throws SQLException {
+    public List<User> getAllUsers() {
         List<User> allUser = new ArrayList<>();
         String sql = "SELECT id, name, lastName, age from users";
 
@@ -68,6 +76,8 @@ public class UserDaoJDBCImpl implements UserDao {
                 allUser.add(user);
             }
 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return allUser;
     }
