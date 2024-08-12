@@ -24,7 +24,7 @@ public class UserDaoJDBCImpl implements UserDao {
                     "PRIMARY KEY (id))");
             System.out.println("Таблица создана");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();;
         }
     }
 
@@ -33,7 +33,7 @@ public class UserDaoJDBCImpl implements UserDao {
             statement.executeUpdate("Drop table if exists test1.users");
             System.out.println("Таблица удалена");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();;
         }
     }
 
@@ -46,7 +46,7 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.executeUpdate();
             System.out.println("User с именем – " + name + " добавлен в базу данных");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();;
         }
     }
 
@@ -56,7 +56,7 @@ public class UserDaoJDBCImpl implements UserDao {
             statement.executeUpdate(sql);
             System.out.println("User удален");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();;
         }
     }
 
@@ -77,7 +77,7 @@ public class UserDaoJDBCImpl implements UserDao {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();;
         }
         return allUser;
     }
